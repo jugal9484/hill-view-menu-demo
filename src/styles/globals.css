@@ -1,0 +1,69 @@
+@import './fonts.css';
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: var(--stack-h);
+  }
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+    min-height: 100dvh;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible {
+    outline: 2px solid var(--royal-500);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  button { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  /* soft edge fade on horizontally scrolling rows */
+  .edge-fade {
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent 100%);
+  }
+  .pb-safe { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  .px-safe {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .dash-divider {
+    background-image: linear-gradient(90deg, rgb(var(--c-hairline)) 50%, transparent 50%);
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+    height: 1px;
+  }
+}
+
+
+.shimmer {
+  background: linear-gradient(100deg, rgb(var(--c-accent-soft)) 30%, rgb(var(--c-card)) 50%, rgb(var(--c-accent-soft)) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* static splash stand-in from the pre-rendered shell (see app/shell.tsx) */
+.splash-seen #splash-shell { display: none; }
+
+mark.hl {
+  background: rgb(201 164 92 / 0.32);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}
