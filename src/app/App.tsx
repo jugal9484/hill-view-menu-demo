@@ -144,15 +144,9 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
+  // The Menu button is always available, stepping aside only while the guest scrolls down or a sheet is open.
   const scrollDir = useScrollDirection();
-  const [pastHero, setPastHero] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setPastHero(window.scrollY > (mainRef.current?.offsetTop ?? 400) - 200);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  const fabHidden = !pastHero || scrollDir === 'down' || menuOpen || !!openItem || infoOpen;
+  const fabHidden = scrollDir === 'down' || menuOpen || !!openItem || infoOpen;
 
   const resetAll = () => {
     setQuery('');
